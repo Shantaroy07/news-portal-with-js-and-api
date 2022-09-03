@@ -1,9 +1,9 @@
 const displayAllCategories = async () => {
     try {
         const url = 'https://openapi.programming-hero.com/api/news/categories'
-        const res = await fetch(url);
-        const data = await res.json();
-        displayCategories(data.data.news_category);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displayCategories(data.data.news_category));
 
     }
     catch (error) {
@@ -18,7 +18,7 @@ const displayCategories = (categories) => {
         const divField = document.createElement('div');
         divField.classList.add('style');
         divField.innerHTML = `
-        <p onclick ="displaynews('${category.category_id}')">${category.category_name}</p>       
+        <h5 onclick ="displaynews('${category.category_id}')">${category.category_name}</h5>       
         `;
         categoryField.appendChild(divField);
 
@@ -27,13 +27,13 @@ const displayCategories = (categories) => {
 }
 
 
-const displaynews = async (id) => {
+const displaynews = (id) => {
     try {
         toggleSpiner(true);
         const url = `https://openapi.programming-hero.com/api/news/category/${id}`
-        const res = await fetch(url);
-        const data = await res.json();
-        newsAll(data.data);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => newsAll(data.data));
     }
     catch (error) {
         console.log('The error is:', error);
@@ -58,40 +58,49 @@ const toggleSpiner = isLoading => {
 const newsAll = (allnews) => {
     const newsField = document.getElementById('display-news');
     newsField.textContent = '';
+    const viewFeld = document.getElementById('view');
+    allnews.sort((a, b) => {
+        return b.total_view - a.total_view;
+
+    })
+    newsDisplayFunction(allnews);
+
+}
+
+const newsDisplayFunction = (allnews) => {
     allnews.forEach(news => {
         const divField = document.createElement('div');
         divField.innerHTML = `
-        <div class="card mb-3 mx-5">
+        <div class="card mb-3 ">
         <div class="row g-0">
             <div class="col-md-4">
-                <img src="${news.thumbnail_url}" class="img-fluid rounded-start " alt="...">
+                <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">${news.title}</h5>
-                    <p class="card-text">${news.details.slice(0, 800)}</p>
-                    <div class="d-flex  align-items-center">
-                    <div class="d-flex  align-items-center">
+                    <p class="card-text">${news.details.slice(0, 500)}</p>
+                    
+                    <div class="d-flex  align-items-center flex-wrap">
                         <div class="w-25 h-25 d-flex justify-content-center align-items-center ">
                             <img src="${news.author.img}" class="img-fluid my-3 author-img w-25 h-25" alt="...">
                         </div>
                         <div class="p-3">
                             <p>${news.author.name ? news.author.name : 'Name not found'} </p>
-                            <p>${news.author.published_date} </p>
+                            <p>${news.author.published_date ? news.author.published_date : 'Date not found'} </p>
                         </div>
                         <div class="">
-                            <p class="p-3"> View: ${news.total_view ? news.total_view : 'Viewers Not Found'} </p>
+                            <p class="p-3"> View: ${news.total_view ? (news.total_view) + 'M' : 'Viewers Not Found'} </p>
                         </div>
                         <div>
                             <button onclick="infoData('${news._id}')" id="details-button" type="button"
-                                class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#newsDetailModal">
+                                class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#newsDetailModal">
                                 Show Details
                             </button>
                         </div>
                     </div>
 
-                </div>
-
+                
 
             </div>
 
