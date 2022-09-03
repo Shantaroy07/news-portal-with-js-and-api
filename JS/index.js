@@ -26,6 +26,7 @@ const displaynews = async (id) => {
     const data = await res.json();
     newsAll(data.data);
 
+
 }
 
 const toggleSpiner = isLoading => {
@@ -46,48 +47,55 @@ const newsAll = (allnews) => {
     allnews.forEach(news => {
         const divField = document.createElement('div');
         divField.innerHTML = `
-            <div class="card mb-3 mx-5" onclick="displayInfo("${news}")">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">${news.title}</h5>
-                            <p class="card-text">${news.details}</p>
-                            <div class="d-flex">
-                              <div class="d-flex w-25 h-25">
-                            
+        <div class="card mb-3 mx-5">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">${news.title}</h5>
+                        <p class="card-text">${news.details}</p>
+                        <div class="d-flex">
+                            <div class="d-flex w-25 h-25">
+
                                 <div class="w-25 h-25  ">
-                                    <img src="${news.author.img}" class="img-fluid rounded-start  rounded-5  my-3 " alt="...">
-                                 </div>
+                                    <img src="${news.author.img}" class="img-fluid rounded-start  rounded-5  my-3 "
+                                        alt="...">
+                                </div>
                                 <div class="p-3">
                                     <p>${news.author.name} </p>
                                     <p>${news.author.published_date} </p>
-                                 </div> 
-                                 </div>             
-                                 <div class="d-flex">
-                                    <p class="p-3">View: ${news.total_view} </p>
+                                </div>
                             </div>
-                                 
+                            <div class="d-flex">
+                                <p class="p-3">View: ${news.total_view} </p>
                             </div>
-                            
+                            <div>
+                                <button onclick="displayInfo('${news}')" type="button" class="btn btn-primary"
+                                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
+                                    Show Details
+                                </button>
+                            </div>
                         </div>
+
+
                     </div>
+
                 </div>
             </div>
+    </div>
+
 `;
-
         newsField.appendChild(divField);
-
     });
     toggleSpiner(false);
 
 }
 
-const displayInfo = (info) => {
-    const modalField = document.getElementById('newsDetailModal');
-    console.log(info.name);
+const displayInfo = info => {
+
+    console.log(info);
 
 }
 
