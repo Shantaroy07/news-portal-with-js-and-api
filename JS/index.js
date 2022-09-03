@@ -73,7 +73,7 @@ const newsAll = (allnews) => {
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title">${news.title}</h5>
-                    <p class="card-text">${news.details.slice(0, 500)}</p>
+                    <p class="card-text">${news.details.slice(0, 400)}...</p>
                     
                     <div class="d-flex  align-items-center flex-wrap">
                         <div class="w-25 h-25 d-flex justify-content-center align-items-center ">
@@ -87,10 +87,10 @@ const newsAll = (allnews) => {
                             <p class="p-3"> <i class="fa-sharp fa-solid fa-eye"></i> ${news.total_view ? (news.total_view) + 'M' : 'Viewers Not Found'} </p>
                         </div>
                         <div>
-                            <p onclick="infoData('${news._id}')" id="details-button" type="button"
-                                class="btn btn-primary ms-2 " data-bs-toggle="modal" data-bs-target="#newsDetailModal"><i class="fa-solid fa-arrow-right"></i>
-                                
-                            </p>
+                            <button onclick="infoData('${news._id}')" id="details-button" type="button"
+                                class="btn btn-primary ms-2 " data-bs-toggle="modal" data-bs-target="#newsDetailModal"> Show Details <i class="fa-solid fa-arrow-right"></i>
+                               
+                            </button>
                         </div>
                     </div>
 
@@ -145,8 +145,6 @@ const displayInfo = data => {
     `;
 
 }
-
-
 
 displayAllCategories();
 displaynews('08');

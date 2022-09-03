@@ -1,5 +1,9 @@
 .web-name {
     color: indigo;
+    font-weight: 900;
+}
+
+.menu-name {
     font-weight: 700;
 }
 
