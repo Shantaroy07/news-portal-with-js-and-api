@@ -56,18 +56,12 @@ const toggleSpiner = isLoading => {
 
 
 const newsAll = (allnews) => {
+
     const newsField = document.getElementById('display-news');
     newsField.textContent = '';
-    const viewFeld = document.getElementById('view');
     allnews.sort((a, b) => {
         return b.total_view - a.total_view;
-
     })
-    newsDisplayFunction(allnews);
-
-}
-
-const newsDisplayFunction = (allnews) => {
     allnews.forEach(news => {
         const divField = document.createElement('div');
         divField.innerHTML = `
@@ -90,13 +84,13 @@ const newsDisplayFunction = (allnews) => {
                             <p>${news.author.published_date ? news.author.published_date : 'Date not found'} </p>
                         </div>
                         <div class="">
-                            <p class="p-3"> View: ${news.total_view ? (news.total_view) + 'M' : 'Viewers Not Found'} </p>
+                            <p class="p-3"> <i class="fa-sharp fa-solid fa-eye"></i> ${news.total_view ? (news.total_view) + 'M' : 'Viewers Not Found'} </p>
                         </div>
                         <div>
-                            <button onclick="infoData('${news._id}')" id="details-button" type="button"
-                                class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#newsDetailModal">
-                                Show Details
-                            </button>
+                            <p onclick="infoData('${news._id}')" id="details-button" type="button"
+                                class="btn btn-primary ms-2 " data-bs-toggle="modal" data-bs-target="#newsDetailModal"><i class="fa-solid fa-arrow-right"></i>
+                                
+                            </p>
                         </div>
                     </div>
 
@@ -140,12 +134,12 @@ const displayInfo = data => {
     const modalBody = document.getElementById('news-deatils');
     modalBody.innerHTML = `
     
-    <p>Published date:${data.author.published_date}</p>
+    <p>Published date:${data.author.published_date ? data.author.published_date : "Not Found"}</p>
     <p>Author: ${data.author.name ? data.author.name : 'Not found'}</p>
-    <p>Ratings: ${data.rating.number}</p>
+    <p>Ratings: ${data.rating.number ? data.rating.number : 'Not Found'}</p>
     <p>Total View: ${data.total_view ? data.total_view : 'Not found'}</p>
-    <p>Trending: ${data.others_info.is_trending}</p>
-    <p>Detail News: ${data.details}</p>
+    <p>Trending: ${data.others_info.is_trending ? data.others_info.is_trending : "Not Found"}</p>
+    <p>Detail News: ${data.details ? data.details : "Not found"}</p>
     
     
     `;
