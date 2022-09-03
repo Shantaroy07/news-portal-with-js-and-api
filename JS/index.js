@@ -12,32 +12,41 @@ const displayCategories = (categories) => {
         const divField = document.createElement('div');
         divField.classList.add('style');
         divField.innerHTML = `
-        <p onclick ="displaynews('${category.category_id}')">${category.category_name}</p>
-        
+        <p onclick ="displaynews('${category.category_id}')">${category.category_name}</p>       
         `;
         categoryField.appendChild(divField);
     }
 }
+
+
 const displaynews = async (id) => {
+    toggleSpiner(true);
     const url = `https://openapi.programming-hero.com/api/news/category/${id}`
     const res = await fetch(url);
     const data = await res.json();
-    news(data.data);
+    newsAll(data.data);
+
+}
+
+const toggleSpiner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none');
+    }
+    else {
+        loaderSection.classList.add('d-none');
+    }
 }
 
 
 
-
-
-
-
-const news = (allnews) => {
+const newsAll = (allnews) => {
     const newsField = document.getElementById('display-news');
     newsField.textContent = '';
-    for (const news of allnews) {
+    allnews.forEach(news => {
         const divField = document.createElement('div');
         divField.innerHTML = `
-            <div class="card mb-3 mx-5">
+            <div class="card mb-3 mx-5" onclick="displayInfo("${news}")">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
@@ -59,8 +68,6 @@ const news = (allnews) => {
                                  </div>             
                                  <div class="d-flex">
                                     <p class="p-3">View: ${news.total_view} </p>
-                                    
-
                             </div>
                                  
                             </div>
@@ -71,11 +78,31 @@ const news = (allnews) => {
             </div>
 `;
 
-
         newsField.appendChild(divField);
 
-    }
+    });
+    toggleSpiner(false);
 
 }
+
+const displayInfo = (info) => {
+    const modalField = document.getElementById('newsDetailModal');
+    console.log(info.name);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 displayAllCategories();
