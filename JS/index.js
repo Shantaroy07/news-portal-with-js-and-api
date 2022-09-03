@@ -62,44 +62,42 @@ const newsAll = (allnews) => {
         const divField = document.createElement('div');
         divField.innerHTML = `
         <div class="card mb-3 mx-5">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="${news.thumbnail_url}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">${news.title}</h5>
-                        <p class="card-text">${news.details}</p>
-                        <div class="d-flex">
-                            <div class="d-flex w-25 h-25">
-
-                                <div class="w-25 h-25  ">
-                                    <img src="${news.author.img}" class="img-fluid rounded-start  rounded-5  my-3 "
-                                        alt="...">
-                                </div>
-                                <div class="p-3">
-                                    <p>${news.author.name ? news.author.name : 'Name not found'} </p>
-                                    <p>${news.author.published_date} </p>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <p class="p-3">View: ${news.total_view ? news.total_view : 'Viewers Not Found'} </p>
-                            </div>
-                            <div>
-                                <button onclick ="infoData('${news._id}')" id="details-button" type="button" class="btn btn-primary"
-                                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
-                                    Show Details
-                                </button>
-                            </div>
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="${news.thumbnail_url}" class="img-fluid rounded-start " alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">${news.title}</h5>
+                    <p class="card-text">${news.details.slice(0, 800)}</p>
+                    <div class="d-flex  align-items-center">
+                    <div class="d-flex  align-items-center">
+                        <div class="w-25 h-25 d-flex justify-content-center align-items-center ">
+                            <img src="${news.author.img}" class="img-fluid my-3 author-img w-25 h-25" alt="...">
                         </div>
-
-
+                        <div class="p-3">
+                            <p>${news.author.name ? news.author.name : 'Name not found'} </p>
+                            <p>${news.author.published_date} </p>
+                        </div>
+                        <div class="">
+                            <p class="p-3"> View: ${news.total_view ? news.total_view : 'Viewers Not Found'} </p>
+                        </div>
+                        <div>
+                            <button onclick="infoData('${news._id}')" id="details-button" type="button"
+                                class="btn btn-primary ms-5" data-bs-toggle="modal" data-bs-target="#newsDetailModal">
+                                Show Details
+                            </button>
+                        </div>
                     </div>
 
                 </div>
-            </div>
-    </div>
 
+
+            </div>
+
+        </div>
+
+</div>
 `;
         newsField.appendChild(divField);
 
@@ -109,17 +107,20 @@ const newsAll = (allnews) => {
     const countNews = newsField.childElementCount;
     const numberField = document.getElementById('news-number');
     numberField.innerText = countNews;
-    const categoryName = document.getElementById('category-name');
-
-
 
 }
 
 const infoData = (newsId) => {
-    const url = `https://openapi.programming-hero.com/api/news/${newsId}`
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayInfo(data.data[0]));
+    try {
+        const url = `https://openapi.programming-hero.com/api/news/${newsId}`
+        fetch(url)
+            .then(res => res.json())
+            .then(data => displayInfo(data.data[0]));
+    }
+
+    catch (error) {
+        console.error(error);
+    }
 
 }
 
@@ -135,6 +136,7 @@ const displayInfo = data => {
     <p>Ratings: ${data.rating.number}</p>
     <p>Total View: ${data.total_view ? data.total_view : 'Not found'}</p>
     <p>Trending: ${data.others_info.is_trending}</p>
+    <p>Detail News: ${data.details}</p>
     
     
     `;

@@ -1,3 +1,8 @@
+.web-name {
+    color: indigo;
+    font-weight: 700;
+}
+
 .style {
     font-size: large;
     font-weight: 700;
@@ -5,7 +10,15 @@
 }
 
 .bg-color {
-    background-color: gainsboro;
+    background-color: wheat;
     padding: 3px 7px;
     font-weight: 700;
+}
+
+.author-img {
+    border-radius: 50%;
+}
+
+body {
+    background-color: gainsboro;
 }
