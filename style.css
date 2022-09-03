@@ -3,3 +3,9 @@
     font-weight: 700;
     padding: 5px;
 }
+
+.bg-color {
+    background-color: gainsboro;
+    padding: 3px 7px;
+    font-weight: 700;
+}

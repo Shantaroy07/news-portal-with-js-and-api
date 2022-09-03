@@ -21,6 +21,8 @@ const displayCategories = (categories) => {
         <p onclick ="displaynews('${category.category_id}')">${category.category_name}</p>       
         `;
         categoryField.appendChild(divField);
+
+
     }
 }
 
@@ -100,8 +102,15 @@ const newsAll = (allnews) => {
 
 `;
         newsField.appendChild(divField);
+
     });
+
     toggleSpiner(false);
+    const countNews = newsField.childElementCount;
+    const numberField = document.getElementById('news-number');
+    numberField.innerText = countNews;
+    const categoryName = document.getElementById('category-name');
+
 
 
 }
@@ -134,16 +143,5 @@ const displayInfo = data => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 displayAllCategories();
+displaynews('08');
