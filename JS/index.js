@@ -1,9 +1,15 @@
 const displayAllCategories = async () => {
-    const url = 'https://openapi.programming-hero.com/api/news/categories'
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategories(data.data.news_category);
+    try {
+        const url = 'https://openapi.programming-hero.com/api/news/categories'
+        const res = await fetch(url);
+        const data = await res.json();
+        displayCategories(data.data.news_category);
 
+    }
+    catch (error) {
+        console.log('The error is:', error);
+
+    }
 }
 
 const displayCategories = (categories) => {
@@ -20,11 +26,17 @@ const displayCategories = (categories) => {
 
 
 const displaynews = async (id) => {
-    toggleSpiner(true);
-    const url = `https://openapi.programming-hero.com/api/news/category/${id}`
-    const res = await fetch(url);
-    const data = await res.json();
-    newsAll(data.data);
+    try {
+        toggleSpiner(true);
+        const url = `https://openapi.programming-hero.com/api/news/category/${id}`
+        const res = await fetch(url);
+        const data = await res.json();
+        newsAll(data.data);
+    }
+    catch (error) {
+        console.log('The error is:', error);
+
+    }
 
 
 }
