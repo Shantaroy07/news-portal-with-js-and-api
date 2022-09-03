@@ -76,15 +76,15 @@ const newsAll = (allnews) => {
                                         alt="...">
                                 </div>
                                 <div class="p-3">
-                                    <p>${news.author.name} </p>
+                                    <p>${news.author.name ? news.author.name : 'Name not found'} </p>
                                     <p>${news.author.published_date} </p>
                                 </div>
                             </div>
                             <div class="d-flex">
-                                <p class="p-3">View: ${news.total_view} </p>
+                                <p class="p-3">View: ${news.total_view ? news.total_view : 'Viewers Not Found'} </p>
                             </div>
                             <div>
-                                <button onclick="displayInfo('${news}')" type="button" class="btn btn-primary"
+                                <button onclick ="infoData('${news._id}')" id="details-button" type="button" class="btn btn-primary"
                                     data-bs-toggle="modal" data-bs-target="#newsDetailModal">
                                     Show Details
                                 </button>
@@ -103,11 +103,32 @@ const newsAll = (allnews) => {
     });
     toggleSpiner(false);
 
+
 }
 
-const displayInfo = info => {
+const infoData = (newsId) => {
+    const url = `https://openapi.programming-hero.com/api/news/${newsId}`
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayInfo(data.data[0]));
 
-    console.log(info);
+}
+
+const displayInfo = data => {
+    const modalTitle = document.getElementById('news-tittle');
+    modalTitle.innerText = data.title;
+
+    const modalBody = document.getElementById('news-deatils');
+    modalBody.innerHTML = `
+    
+    <p>Published date:${data.author.published_date}</p>
+    <p>Author: ${data.author.name ? data.author.name : 'Not found'}</p>
+    <p>Ratings: ${data.rating.number}</p>
+    <p>Total View: ${data.total_view ? data.total_view : 'Not found'}</p>
+    <p>Trending: ${data.others_info.is_trending}</p>
+    
+    
+    `;
 
 }
 
